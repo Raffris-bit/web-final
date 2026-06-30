@@ -375,7 +375,7 @@ Buat akun pengguna melalui halaman Register, atau gunakan data yang sudah di-see
   <table>
     <tr>
       <td><strong>Nama</strong></td>
-      <td>Karunia Raharjo</td>
+      <td>M. Rafi Risqiyanto</td>
     </tr>
     <tr>
       <td><strong>NIM</strong></td>
