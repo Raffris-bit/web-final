@@ -37,6 +37,13 @@ class DashboardController extends Controller
             ];
         });
  
+        // Data buku terlambat
+        $bukuTerlambat = Transaksi::where('status', 'Dipinjam')
+                                   ->where('tanggal_kembali', '<', now())
+                                   ->with(['anggota', 'buku'])
+                                   ->orderBy('tanggal_kembali')
+                                   ->get();
+
         // Top 5 buku populer
         $bukuPopuler = Buku::withCount('transaksis')
                            ->orderByDesc('transaksis_count')
@@ -52,7 +59,7 @@ class DashboardController extends Controller
                                     ->latest()->take(5)->get();
  
         return view('dashboard', compact(
-            'stats', 'chartData', 'bukuPopuler',
+            'stats', 'chartData', 'bukuTerlambat', 'bukuPopuler',
             'anggotaAktif', 'recentTransaksi'
         ));
     }

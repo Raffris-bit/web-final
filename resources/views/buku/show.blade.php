@@ -1,270 +1,230 @@
 @extends('layouts.app')
- 
+
 @section('title', $buku->judul)
- 
+
 @section('content')
-<div class="row">
-    {{-- Breadcrumb --}}
-    <div class="col-12 mb-3">
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center">
+    <div>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class="breadcrumb breadcrumb-modern">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item"><a href="{{ route('buku.index') }}">Buku</a></li>
                 <li class="breadcrumb-item active">{{ $buku->judul }}</li>
             </ol>
         </nav>
     </div>
+    <div class="d-flex gap-2">
+        <a href="{{ route('buku.edit', $buku->id) }}" class="btn btn-warning btn-modern">
+            <i class="bi bi-pencil"></i> Edit
+        </a>
+        <a href="{{ route('buku.index') }}" class="btn btn-outline-secondary btn-modern">
+            <i class="bi bi-arrow-left"></i> Kembali
+        </a>
+    </div>
 </div>
- 
-<div class="row">
+
+<div class="row g-4">
     {{-- Kolom Kiri: Info Buku --}}
-    <div class="col-md-8">
-        <div class="card">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">
-                    <i class="bi bi-book"></i>
-                    Detail Buku
-                </h4>
+    <div class="col-lg-8">
+        <div class="card-modern">
+            <div class="card-header">
+                <i class="bi bi-info-circle me-2 text-primary"></i>Informasi Buku
             </div>
             <div class="card-body">
-                {{-- Judul --}}
-                <h2 class="mb-3">{{ $buku->judul }}</h2>
-                
-                {{-- Badge Kategori --}}
-                <div class="mb-3">
-                    <span class="badge bg-{{ $buku->kategori == 'Programming' ? 'primary' : ($buku->kategori == 'Database' ? 'success' : ($buku->kategori == 'Web Design' ? 'info' : ($buku->kategori == 'Networking' ? 'warning' : 'danger'))) }} fs-6">
-                        <i class="bi bi-tag"></i> {{ $buku->kategori }}
-                    </span>
-                </div>
-                
-                {{-- Informasi Detail --}}
-                <table class="table table-borderless">
-                    <tr>
-                        <td width="200" class="fw-bold">
-                            <i class="bi bi-upc text-primary"></i> Kode Buku
-                        </td>
-                        <td>: {{ $buku->kode_buku }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-person text-primary"></i> Pengarang
-                        </td>
-                        <td>: {{ $buku->pengarang }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-building text-primary"></i> Penerbit
-                        </td>
-                        <td>: {{ $buku->penerbit }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-calendar text-primary"></i> Tahun Terbit
-                        </td>
-                        <td>: {{ $buku->tahun_terbit }}</td>
-                    </tr>
-                    @if ($buku->isbn)
-                        <tr>
-                            <td class="fw-bold">
-                                <i class="bi bi-hash text-primary"></i> ISBN
-                            </td>
-                            <td>: {{ $buku->isbn }}</td>
-                        </tr>
-                    @endif
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-translate text-primary"></i> Bahasa
-                        </td>
-                        <td>: {{ $buku->bahasa }}</td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-cash text-primary"></i> Harga
-                        </td>
-                        <td>: <span class="text-success fs-5 fw-bold">{{ $buku->harga_format }}</span></td>
-                    </tr>
-                    <tr>
-                        <td class="fw-bold">
-                            <i class="bi bi-boxes text-primary"></i> Stok
-                        </td>
-                        <td>
-                            : <span class="fw-bold">{{ $buku->stok }}</span> buku
-                            @if ($buku->stok > 0)
-                                <span class="badge bg-success ms-2">
-                                    <i class="bi bi-check-circle"></i> Tersedia
-                                </span>
-                            @else
-                                <span class="badge bg-danger ms-2">
-                                    <i class="bi bi-x-circle"></i> Habis
-                                </span>
-                            @endif
-                        </td>
-                    </tr>
-                </table>
-                
-                {{-- Deskripsi --}}
-                @if ($buku->deskripsi)
-                    <hr>
-                    <h5><i class="bi bi-file-text text-primary"></i> Deskripsi</h5>
-                    <p class="text-justify">{{ $buku->deskripsi }}</p>
-                @else
-                    <hr>
-                    <p class="text-muted fst-italic">
-                        <i class="bi bi-info-circle"></i> Tidak ada deskripsi untuk buku ini
-                    </p>
-                @endif
-                
-                {{-- Timestamps --}}
-                <hr>
-                <div class="row text-muted small">
+                <div class="row g-4">
                     <div class="col-md-6">
-                        <i class="bi bi-clock"></i> 
-                        Ditambahkan: {{ $buku->created_at->format('d M Y H:i') }}
+                        <table class="table table-borderless mb-0" style="font-size:0.9rem;">
+                            <tr>
+                                <td class="text-muted" style="width:120px;">Kode Buku</td>
+                                <td class="fw-semibold"><code>{{ $buku->kode_buku }}</code></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Judul</td>
+                                <td class="fw-semibold">{{ $buku->judul }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Pengarang</td>
+                                <td class="fw-semibold">{{ $buku->pengarang }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Penerbit</td>
+                                <td>{{ $buku->penerbit }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Kategori</td>
+                                <td>
+                                    <span class="badge bg-primary-50 text-primary badge-modern">
+                                        {{ $buku->kategori }}
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="col-md-6 text-end">
-                        <i class="bi bi-clock-history"></i> 
-                        Terakhir Update: {{ $buku->updated_at->format('d M Y H:i') }}
+                    <div class="col-md-6">
+                        <table class="table table-borderless mb-0" style="font-size:0.9rem;">
+                            <tr>
+                                <td class="text-muted" style="width:120px;">ISBN</td>
+                                <td class="fw-semibold">{{ $buku->isbn ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Tahun Terbit</td>
+                                <td class="fw-semibold">{{ $buku->tahun_terbit }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Bahasa</td>
+                                <td>{{ $buku->bahasa }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Harga</td>
+                                <td class="fw-semibold">Rp {{ number_format($buku->harga, 0, ',', '.') }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted">Stok</td>
+                                <td>
+                                    @if($buku->stok > 5)
+                                        <span class="badge bg-success badge-modern">{{ $buku->stok }} tersedia</span>
+                                    @elseif($buku->stok > 0)
+                                        <span class="badge bg-warning text-dark badge-modern">Sisa {{ $buku->stok }}</span>
+                                    @else
+                                        <span class="badge bg-danger badge-modern">Stok Habis</span>
+                                    @endif
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+                </div>
+
+                @if($buku->deskripsi)
+                <hr>
+                <div>
+                    <h6 class="fw-semibold mb-2">Deskripsi</h6>
+                    <p class="text-muted mb-0" style="font-size:0.9rem; line-height:1.7;">{{ $buku->deskripsi }}</p>
+                </div>
+                @endif
+            </div>
+        </div>
+
+        {{-- Riwayat Transaksi Buku Ini --}}
+        @php
+            $riwayatBuku = $buku->transaksis()->with('anggota')->latest()->take(10)->get();
+        @endphp
+        @if($riwayatBuku->count() > 0)
+        <div class="card-modern mt-4">
+            <div class="card-header">
+                <i class="bi bi-clock-history me-2 text-primary"></i>Riwayat Peminjaman
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table-modern table">
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Anggota</th>
+                                <th>Tgl Pinjam</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($riwayatBuku as $trx)
+                            <tr>
+                                <td><code>{{ $trx->kode_transaksi }}</code></td>
+                                <td>
+                                    <a href="{{ route('anggota.show', $trx->anggota_id) }}" class="text-decoration-none">
+                                        {{ $trx->anggota->nama }}
+                                    </a>
+                                </td>
+                                <td class="text-muted">{{ $trx->tanggal_pinjam->format('d M Y') }}</td>
+                                <td>
+                                    @if($trx->status == 'Dipinjam')
+                                        <span class="badge bg-warning text-dark badge-modern">Dipinjam</span>
+                                    @else
+                                        <span class="badge bg-success badge-modern">Dikembalikan</span>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
+        @endif
     </div>
-    
-    {{-- Kolom Kanan: Actions & Info Tambahan --}}
-    <div class="col-md-4">
-        {{-- Card Actions --}}
-        <div class="card mb-3">
-            <div class="card-header bg-secondary text-white">
-                <h6 class="mb-0">
-                    <i class="bi bi-gear"></i> Aksi
-                </h6>
-            </div>
-            <div class="card-body d-grid gap-2">
-                <a href="{{ route('buku.edit', $buku->id) }}" class="btn btn-warning">
-                    <i class="bi bi-pencil"></i> Edit Buku
-                </a>
-                
-                @if ($buku->stok > 0)
-                    <button class="btn btn-success">
-                        <i class="bi bi-cart-plus"></i> Pinjam Buku
-                    </button>
+
+    {{-- Kolom Kanan: Info Ringkas --}}
+    <div class="col-lg-4">
+        <div class="card-modern mb-4">
+            <div class="card-body text-center py-4">
+                <div class="mx-auto mb-3 d-flex align-items-center justify-content-center rounded-circle"
+                     style="width:80px;height:80px;background:var(--primary-50);color:var(--primary);">
+                    <i class="bi bi-book fs-1"></i>
+                </div>
+                <h5 class="fw-bold mb-1">{{ $buku->judul }}</h5>
+                <p class="text-muted mb-3">{{ $buku->pengarang }}</p>
+
+                @if($buku->stok > 0)
+                    <a href="{{ route('transaksi.create') }}?buku_id={{ $buku->id }}"
+                       class="btn btn-primary btn-modern w-100">
+                        <i class="bi bi-plus-circle"></i> Pinjam Buku Ini
+                    </a>
                 @else
-                    <button class="btn btn-secondary" disabled>
+                    <button class="btn btn-secondary btn-modern w-100" disabled>
                         <i class="bi bi-x-circle"></i> Stok Habis
                     </button>
                 @endif
-                
-                <a href="{{ route('buku.index') }}" class="btn btn-outline-primary">
-                    <i class="bi bi-arrow-left"></i> Kembali
-                </a>
-                
-                <hr>
-                
-                {{-- Delete Button dengan SweetAlert --}}
-                <form action="{{ route('buku.destroy', $buku->id) }}" 
-                    method="POST" 
-                    class="d-inline delete-form">
-                    @csrf
-                    @method('DELETE')
-                    <button type="button" class="btn btn-sm btn-danger w-100 btn-delete" 
-                            data-judul="{{ $buku->judul }}">
-                        <i class="bi bi-trash"></i> Hapus
-                    </button>
-                </form>
-                
-                @push('scripts')
-                <script>
-                    // SweetAlert confirmation untuk delete
-                    document.querySelectorAll('.btn-delete').forEach(button => {
-                        button.addEventListener('click', function(e) {
-                            e.preventDefault();
-                            const form = this.closest('form');
-                            const judul = this.getAttribute('data-judul');
-                            
-                            Swal.fire({
-                                title: 'Konfirmasi Hapus',
-                                text: `Apakah Anda yakin ingin menghapus buku "${judul}"?`,
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#d33',
-                                cancelButtonColor: '#3085d6',
-                                confirmButtonText: 'Ya, Hapus!',
-                                cancelButtonText: 'Batal'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    form.submit();
-                                }
-                            });
-                        });
-                    });
-                </script>
-                @endpush
             </div>
         </div>
-        
-        {{-- Card Status Stok --}}
-        <div class="card mb-3">
-            <div class="card-header bg-info text-white">
-                <h6 class="mb-0">
-                    <i class="bi bi-info-circle"></i> Status Stok
-                </h6>
+
+        {{-- Info Metadata --}}
+        <div class="card-modern">
+            <div class="card-header">
+                <i class="bi bi-clock me-2 text-muted"></i>Metadata
             </div>
             <div class="card-body">
-                @if ($buku->stok == 0)
-                    <div class="alert alert-danger mb-0">
-                        <i class="bi bi-exclamation-triangle"></i>
-                        <strong>Stok Habis!</strong><br />
-                        Buku ini sedang tidak tersedia.
-                    </div>
-                @elseif ($buku->stok <= 5)
-                    <div class="alert alert-warning mb-0">
-                        <i class="bi bi-exclamation-circle"></i>
-                        <strong>Stok Menipis!</strong><br />
-                        Tersisa {{ $buku->stok }} buku.
-                    </div>
-                @else
-                    <div class="alert alert-success mb-0">
-                        <i class="bi bi-check-circle"></i>
-                        <strong>Stok Aman!</strong><br />
-                        Tersedia {{ $buku->stok }} buku.
-                    </div>
-                @endif
+                <table class="table table-borderless mb-0" style="font-size:0.85rem;">
+                    <tr>
+                        <td class="text-muted p-1">Ditambahkan</td>
+                        <td class="p-1 text-end">{{ $buku->created_at->format('d M Y H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted p-1">Diupdate</td>
+                        <td class="p-1 text-end">{{ $buku->updated_at->format('d M Y H:i') }}</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        
-        {{-- Card Buku Serupa --}}
-        <div class="card">
-            <div class="card-header bg-dark text-white">
-                <h6 class="mb-0">
-                    <i class="bi bi-collection"></i> Buku Serupa
-                </h6>
+
+        {{-- Buku Serupa --}}
+        @php
+            $bukuSerupa = \App\Models\Buku::where('kategori', $buku->kategori)
+                                          ->where('id', '!=', $buku->id)
+                                          ->latest()
+                                          ->take(5)
+                                          ->get();
+        @endphp
+        @if($bukuSerupa->count() > 0)
+        <div class="card-modern mt-4">
+            <div class="card-header">
+                <i class="bi bi-collection me-2 text-muted"></i>Buku Serupa
             </div>
             <div class="card-body">
-                @php
-                    $bukuSerupa = App\Models\Buku::where('kategori', $buku->kategori)
-                                                  ->where('id', '!=', $buku->id)
-                                                  ->take(3)
-                                                  ->get();
-                @endphp
-                
-                @forelse ($bukuSerupa as $item)
-                    <div class="mb-3">
-                        <a href="{{ route('buku.show', $item->id) }}" class="text-decoration-none">
-                            <h6 class="mb-1">{{ Str::limit($item->judul, 40) }}</h6>
-                        </a>
-                        <small class="text-muted">{{ $item->pengarang }}</small>
+                @foreach($bukuSerupa as $item)
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="d-flex align-items-center justify-content-center rounded"
+                             style="width:36px;height:36px;background:var(--primary-50);flex-shrink:0;">
+                            <i class="bi bi-book text-primary" style="font-size:0.85rem;"></i>
+                        </div>
+                        <div class="min-width-0">
+                            <a href="{{ route('buku.show', $item->id) }}" class="fw-semibold text-decoration-none small">
+                                {{ Str::limit($item->judul, 35) }}
+                            </a>
+                            <div class="text-muted" style="font-size:0.75rem;">{{ $item->pengarang }}</div>
+                        </div>
                     </div>
-                    @if (!$loop->last)
-                        <hr>
-                    @endif
-                @empty
-                    <p class="text-muted small mb-0">
-                        <i class="bi bi-info-circle"></i>
-                        Tidak ada buku serupa
-                    </p>
-                @endforelse
+                @endforeach
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

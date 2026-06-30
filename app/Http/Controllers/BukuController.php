@@ -12,10 +12,26 @@ class BukuController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
-        // Ambil semua data buku dari database
-        $bukus = Buku::latest()->get();
+        $query = Buku::query();
+
+        // Filter by search keyword
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('judul', 'like', "%{$keyword}%")
+                  ->orWhere('pengarang', 'like', "%{$keyword}%")
+                  ->orWhere('penerbit', 'like', "%{$keyword}%");
+            });
+        }
+
+        // Filter by tahun
+        if ($request->filled('tahun')) {
+            $query->where('tahun_terbit', $request->tahun);
+        }
+
+        $bukus = $query->latest()->get();
 
         // Statistik untuk card
         $totalBuku = Buku::count();

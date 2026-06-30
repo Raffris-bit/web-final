@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Anggota;
+use App\Models\Transaksi;
 use App\Http\Requests\StoreAnggotaRequest;
 use App\Http\Requests\UpdateAnggotaRequest;
 use App\Exports\AnggotaExport;
@@ -14,9 +15,26 @@ class AnggotaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $anggotas = Anggota::latest()->get();
+        $query = Anggota::query();
+
+        // Filter by search keyword
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+            $query->where(function ($q) use ($keyword) {
+                $q->where('nama', 'like', "%{$keyword}%")
+                  ->orWhere('email', 'like', "%{$keyword}%")
+                  ->orWhere('telepon', 'like', "%{$keyword}%");
+            });
+        }
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $anggotas = $query->latest()->get();
 
         // Statistik
         $totalAnggota = Anggota::count();
@@ -78,10 +96,38 @@ class AnggotaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Request $request, string $id)
     {
         $anggota = Anggota::findOrFail($id);
-        return view('anggota.show', compact('anggota'));
+
+        // Query dasar transaksi untuk anggota ini
+        $query = Transaksi::where('anggota_id', $id)
+            ->with('buku')
+            ->latest();
+
+        // Filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Riwayat transaksi
+        $riwayatTransaksi = $query->get();
+
+        // Statistik peminjaman
+        $totalPinjam = Transaksi::where('anggota_id', $id)->count();
+        $totalDenda = Transaksi::where('anggota_id', $id)->sum('denda');
+        $sedangDipinjam = Transaksi::where('anggota_id', $id)
+            ->where('status', 'Dipinjam')
+            ->count();
+        $sudahDikembalikan = Transaksi::where('anggota_id', $id)
+            ->where('status', 'Dikembalikan')
+            ->count();
+
+        return view('anggota.show', compact(
+            'anggota', 'riwayatTransaksi',
+            'totalPinjam', 'totalDenda',
+            'sedangDipinjam', 'sudahDikembalikan'
+        ));
     }
 
     // Methods lainnya akan diimplementasi di pertemuan 13

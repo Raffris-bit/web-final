@@ -3,107 +3,122 @@
 @section('title', 'Laporan Transaksi')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1>
-        <i class="bi bi-file-earmark-bar-graph"></i>
-        Laporan Transaksi
-    </h1>
+<div class="page-header d-flex flex-wrap justify-content-between align-items-center">
     <div>
-        <a href="{{ route('transaksi.laporan.pdf', request()->query()) }}" class="btn btn-danger" target="_blank">
+        <h1><i class="bi bi-file-earmark-bar-graph me-2"></i>Laporan Transaksi</h1>
+        <p class="page-subtitle">Filter dan lihat laporan transaksi peminjaman</p>
+    </div>
+    <div class="d-flex gap-2 mt-2 mt-md-0">
+        <a href="{{ route('transaksi.laporan.pdf', request()->query()) }}"
+           class="btn btn-danger btn-modern" target="_blank">
             <i class="bi bi-file-earmark-pdf"></i> Export PDF
         </a>
     </div>
 </div>
 
-{{-- Form Filter --}}
-<div class="card shadow-sm border-0 mb-4">
-    <div class="card-header bg-white border-bottom py-3">
-        <h5 class="mb-0"><i class="bi bi-funnel"></i> Filter Laporan</h5>
+{{-- Filter Form --}}
+<div class="card-modern mb-4">
+    <div class="card-header">
+        <i class="bi bi-funnel me-2 text-primary"></i>Filter Laporan
     </div>
     <div class="card-body">
-        <form action="{{ route('transaksi.laporan') }}" method="GET">
-            <div class="row g-3">
-                <div class="col-md-3">
-                    <label for="dari" class="form-label">Tanggal Dari</label>
-                    <input type="date" name="dari" id="dari" class="form-control" value="{{ request('dari') }}">
-                </div>
-                <div class="col-md-3">
-                    <label for="sampai" class="form-label">Tanggal Sampai</label>
-                    <input type="date" name="sampai" id="sampai" class="form-control" value="{{ request('sampai') }}">
-                </div>
-                <div class="col-md-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select name="status" id="status" class="form-select">
-                        <option value="">Semua</option>
-                        <option value="Dipinjam" {{ request('status') == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
-                        <option value="Dikembalikan" {{ request('status') == 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="anggota_id" class="form-label">Anggota</label>
-                    <select name="anggota_id" id="anggota_id" class="form-select">
-                        <option value="">Semua Anggota</option>
-                        @foreach($anggotas as $anggota)
-                            <option value="{{ $anggota->id }}" {{ request('anggota_id') == $anggota->id ? 'selected' : '' }}>
-                                {{ $anggota->nama }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+        <form action="{{ route('transaksi.laporan') }}" method="GET" class="row g-3">
+            <div class="col-md-3">
+                <label class="form-label">Dari Tanggal</label>
+                <input type="date" name="dari" class="form-control" value="{{ request('dari') }}">
             </div>
-            <div class="mt-3 d-flex gap-2">
-                <button type="submit" class="btn btn-primary">
-                    <i class="bi bi-search"></i> Filter
+            <div class="col-md-3">
+                <label class="form-label">Sampai Tanggal</label>
+                <input type="date" name="sampai" class="form-control" value="{{ request('sampai') }}">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select">
+                    <option value="">Semua Status</option>
+                    <option value="Dipinjam" {{ request('status') == 'Dipinjam' ? 'selected' : '' }}>Dipinjam</option>
+                    <option value="Dikembalikan" {{ request('status') == 'Dikembalikan' ? 'selected' : '' }}>Dikembalikan</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Anggota</label>
+                <select name="anggota_id" class="form-select">
+                    <option value="">Semua Anggota</option>
+                    @foreach($anggotas as $anggota)
+                        <option value="{{ $anggota->id }}" {{ request('anggota_id') == $anggota->id ? 'selected' : '' }}>
+                            {{ $anggota->nama }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-12 d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-modern">
+                    <i class="bi bi-funnel"></i> Terapkan Filter
                 </button>
-                <a href="{{ route('transaksi.laporan') }}" class="btn btn-outline-secondary">
-                    <i class="bi bi-arrow-counterclockwise"></i> Reset
+                <a href="{{ route('transaksi.laporan') }}" class="btn btn-outline-secondary btn-modern">
+                    <i class="bi bi-x-circle"></i> Reset
                 </a>
             </div>
         </form>
     </div>
 </div>
 
-{{-- Ringkasan --}}
-<div class="row mb-4 g-3">
-    <div class="col-md-4">
-        <div class="card border-primary shadow-sm border-0">
+{{-- Summary --}}
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="stat-card card">
             <div class="card-body text-center">
-                <h6 class="text-muted"><i class="bi bi-receipt"></i> Total Transaksi</h6>
-                <h2 class="fw-bold text-primary">{{ $transaksis->count() }}</h2>
+                <div class="stat-value text-primary">{{ $transaksis->count() }}</div>
+                <div class="stat-label">Total Transaksi</div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card border-danger shadow-sm border-0">
+    <div class="col-md-3">
+        <div class="stat-card card">
             <div class="card-body text-center">
-                <h6 class="text-muted"><i class="bi bi-cash-coin"></i> Total Denda</h6>
-                <h2 class="fw-bold text-danger">Rp {{ number_format($totalDenda, 0, ',', '.') }}</h2>
+                <div class="stat-value text-warning">{{ $transaksis->where('status', 'Dipinjam')->count() }}</div>
+                <div class="stat-label">Dipinjam</div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="card border-warning shadow-sm border-0">
+    <div class="col-md-3">
+        <div class="stat-card card">
             <div class="card-body text-center">
-                <h6 class="text-muted"><i class="bi bi-hourglass-split"></i> Masih Dipinjam</h6>
-                <h2 class="fw-bold text-warning">{{ $transaksis->where('status', 'Dipinjam')->count() }}</h2>
+                <div class="stat-value text-success">{{ $transaksis->where('status', 'Dikembalikan')->count() }}</div>
+                <div class="stat-label">Dikembalikan</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card card">
+            <div class="card-body text-center">
+                <div class="stat-value text-danger">Rp {{ number_format($totalDenda, 0, ',', '.') }}</div>
+                <div class="stat-label">Total Denda</div>
             </div>
         </div>
     </div>
 </div>
 
-{{-- Tabel Hasil --}}
-<div class="card shadow-sm border-0">
-    <div class="card-body">
+{{-- Tabel Laporan --}}
+<div class="card-modern">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-table me-2 text-primary"></i>Data Transaksi</span>
+        <a href="{{ route('transaksi.laporan.pdf', request()->query()) }}"
+           class="btn btn-sm btn-danger btn-modern" target="_blank">
+            <i class="bi bi-file-earmark-pdf"></i> Export PDF
+        </a>
+    </div>
+    <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle">
-                <thead class="table-light">
+            <table class="table-modern table" id="laporanTable">
+                <thead>
                     <tr>
                         <th>No</th>
-                        <th>Kode Transaksi</th>
+                        <th>Kode</th>
                         <th>Anggota</th>
                         <th>Buku</th>
-                        <th>Tanggal Pinjam</th>
-                        <th>Tanggal Kembali</th>
+                        <th>Tgl Pinjam</th>
+                        <th>Batas Kembali</th>
+                        <th>Tgl Dikembalikan</th>
                         <th>Status</th>
                         <th>Denda</th>
                     </tr>
@@ -113,28 +128,35 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td><code>{{ $transaksi->kode_transaksi }}</code></td>
-                        <td>{{ $transaksi->anggota->nama }}</td>
-                        <td>{{ $transaksi->buku->judul }}</td>
-                        <td>{{ $transaksi->tanggal_pinjam->format('d M Y') }}</td>
                         <td>
-                            {{ $transaksi->tanggal_kembali->format('d M Y') }}
-                            @if($transaksi->status == 'Dikembalikan' && $transaksi->tanggal_dikembalikan)
-                                <br><small class="text-muted">Dikembalikan: {{ $transaksi->tanggal_dikembalikan->format('d M Y') }}</small>
+                            <a href="{{ route('anggota.show', $transaksi->anggota_id) }}" class="text-decoration-none">
+                                {{ $transaksi->anggota->nama }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ route('buku.show', $transaksi->buku_id) }}" class="text-decoration-none">
+                                {{ Str::limit($transaksi->buku->judul, 30) }}
+                            </a>
+                        </td>
+                        <td class="small">{{ $transaksi->tanggal_pinjam->format('d/m/Y') }}</td>
+                        <td class="small">{{ $transaksi->tanggal_kembali->format('d/m/Y') }}</td>
+                        <td class="small">
+                            @if($transaksi->tanggal_dikembalikan)
+                                {{ $transaksi->tanggal_dikembalikan->format('d/m/Y') }}
+                            @else
+                                <span class="text-muted">-</span>
                             @endif
                         </td>
                         <td>
                             @if($transaksi->status == 'Dipinjam')
-                                <span class="badge bg-warning text-dark">Dipinjam</span>
-                                @if($transaksi->terlambat > 0)
-                                    <br><span class="badge bg-danger mt-1">Terlambat {{ $transaksi->terlambat }} hari</span>
-                                @endif
+                                <span class="badge bg-warning text-dark badge-modern">Dipinjam</span>
                             @else
-                                <span class="badge bg-success">Dikembalikan</span>
+                                <span class="badge bg-success badge-modern">Dikembalikan</span>
                             @endif
                         </td>
                         <td>
                             @if($transaksi->denda > 0)
-                                <span class="text-danger fw-bold">Rp {{ number_format($transaksi->denda, 0, ',', '.') }}</span>
+                                <span class="text-danger fw-semibold">Rp {{ number_format($transaksi->denda, 0, ',', '.') }}</span>
                             @else
                                 <span class="text-muted">-</span>
                             @endif
@@ -142,9 +164,12 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center text-muted py-4">
-                            <i class="bi bi-inbox fs-3 d-block mb-2"></i>
-                            Tidak ada transaksi ditemukan
+                        <td colspan="9">
+                            <div class="empty-state">
+                                <div class="empty-icon"><i class="bi bi-inbox"></i></div>
+                                <h5>Tidak ada transaksi ditemukan</h5>
+                                <p class="mb-0">Coba ubah filter atau rentang tanggal.</p>
+                            </div>
                         </td>
                     </tr>
                     @endforelse
