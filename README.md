@@ -121,31 +121,31 @@ Dibangun dengan antarmuka yang **modern, responsif, dan user-friendly** mengguna
 
 ### 🔐 Halaman Login
 
-<img src="Screenshots/localhost_8000_login.png" alt="Halaman Login" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_login.png" alt="Halaman Login" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 📊 Dashboard
 
-<img src="Screenshots/localhost_8000_dashboard.png" alt="Dashboard" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_dashboard.png" alt="Dashboard" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 📚 Daftar Buku
 
-<img src="Screenshots/localhost_8000_buku.png" alt="Daftar Buku" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_buku.png" alt="Daftar Buku" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 👥 Daftar Anggota
 
-<img src="Screenshots/localhost_8000_anggota.png" alt="Daftar Anggota" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_anggota.png" alt="Daftar Anggota" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 🔄 Daftar Transaksi
 
-<img src="Screenshots/localhost_8000_transaksi.png" alt="Daftar Transaksi" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_transaksi.png" alt="Daftar Transaksi" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 📈 Laporan Transaksi
 
-<img src="Screenshots/localhost_8000_transaksi_laporan.png" alt="Laporan Transaksi" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_transaksi_laporan.png" alt="Laporan Transaksi" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 ### 👤 Profil Pengguna
 
-<img src="Screenshots/localhost_8000_profile.png" alt="Profil Pengguna" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+<img src="screenshots/localhost_8000_profile.png" alt="Profil Pengguna" width="800" style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
 </div>
 
@@ -375,23 +375,23 @@ Buat akun pengguna melalui halaman Register, atau gunakan data yang sudah di-see
   <table>
     <tr>
       <td><strong>Nama</strong></td>
-      <td>Nama Mahasiswa</td>
+      <td>Karunia Raharjo</td>
     </tr>
     <tr>
       <td><strong>NIM</strong></td>
-      <td>1234567890</td>
+      <td>60324001</td>
     </tr>
     <tr>
       <td><strong>Mata Kuliah</strong></td>
-      <td>Pemrograman Web</td>
+      <td>Pemrograman Web 2</td>
     </tr>
     <tr>
       <td><strong>Universitas</strong></td>
-      <td>Nama Universitas</td>
+      <td>UIN K.H. Abdurrahman Wahid Pekalongan</td>
     </tr>
     <tr>
       <td><strong>Email</strong></td>
-      <td>email@example.com</td>
+      <td>yanto@gmail.com</td>
     </tr>
   </table>
 </div>
@@ -401,7 +401,7 @@ Buat akun pengguna melalui halaman Register, atau gunakan data yang sudah di-see
 <div align="center">
   <p>
     <strong>Sistem Informasi Perpustakaan</strong><br>
-    Dibangun dengan ❤️ menggunakan Laravel 13 & Bootstrap 5.3
+    Dibangun dengan ❤️ menggunakan Laravel 13
   </p>
   <p>
     <sub>© 2026 — All Rights Reserved</sub>
