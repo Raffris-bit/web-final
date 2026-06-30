@@ -65,10 +65,10 @@
                             <select name="kategori" id="kategori"
                                     class="form-select @error('kategori') is-invalid @enderror" required>
                                 <option value="">-- Pilih Kategori --</option>
-                                @foreach($kategoris as $kategori)
-                                    <option value="{{ $kategori->nama }}"
-                                        {{ old('kategori', $buku->kategori) == $kategori->nama ? 'selected' : '' }}>
-                                        {{ $kategori->nama }}
+                                @foreach(['Programming', 'Database', 'Web Design', 'Networking', 'Data Science'] as $kategori)
+                                    <option value="{{ $kategori }}"
+                                        {{ old('kategori', $buku->kategori) == $kategori ? 'selected' : '' }}>
+                                        {{ $kategori }}
                                     </option>
                                 @endforeach
                             </select>
